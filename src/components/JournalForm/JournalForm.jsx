@@ -22,7 +22,7 @@ function JournalForm() {
 			<input type='date' name='date' />
 			<input type='text' name='tag' value={inputData} onChange={inputChange} />
 			<textarea name='post' id='' cols='30' rows='10'></textarea>
-			<Button text='Сохранить' />
+			<Button text='Сохранить' onClick={() => console.log('click')} />
 		</form>
 	);
 }
