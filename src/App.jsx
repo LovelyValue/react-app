@@ -28,20 +28,11 @@ function App() {
 				<Header />
 				<JournalAddButton />
 				<JournalList>
-					<CardButton>
-						<JournalItem
-							title={data[0].title}
-							text={data[0].text}
-							date={data[0].date}
-						/>
-					</CardButton>
-					<CardButton>
-						<JournalItem
-							title={data[1].title}
-							text={data[1].text}
-							date={data[1].date}
-						/>
-					</CardButton>
+					{data.map(el => (
+						<CardButton>
+							<JournalItem title={el.title} text={el.text} date={el.date} />
+						</CardButton>
+					))}
 				</JournalList>
 			</LeftPanel>
 			<Body>
