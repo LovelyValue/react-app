@@ -43,18 +43,31 @@ function JournalForm({ onSubmit }) {
 			<input
 				type='text'
 				name='title'
-				className={cn(styles['input'], {
+				className={cn(styles['input-title'], {
 					[styles['invalid']]: !formValidState.title,
 				})}
 			/>
-			<input
-				type='date'
-				name='date'
-				className={cn(styles['input'], {
-					[styles['invalid']]: !formValidState.date,
-				})}
-			/>
-			<input type='text' name='tag' />
+			<div className={styles['form-row']}>
+				<label htmlFor='date' className={styles['form-label']}>
+					<img src='/calendar.svg' alt='Иконка календаря' />
+					<span>Дата</span>
+				</label>
+				<input
+					type='date'
+					name='date'
+					id='date'
+					className={cn(styles['input'], {
+						[styles['invalid']]: !formValidState.date,
+					})}
+				/>
+			</div>
+			<div className={styles['form-row']}>
+				<label htmlFor='tag' className={styles['form-label']}>
+					<img src='/folder.svg' alt='Иконка папки' />
+					<span>Метки</span>
+				</label>
+				<input type='text' name='tag' id='tag' className={styles['input']} />
+			</div>
 			<textarea
 				name='post'
 				id=''
