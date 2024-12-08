@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import { useEffect, useReducer, useRef } from 'react';
+import { useContext, useEffect, useReducer, useRef } from 'react';
 import { UserContext } from '../../context/user.context';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
@@ -12,6 +12,7 @@ function JournalForm({ onSubmit }) {
 	const titleRef = useRef();
 	const dateRef = useRef();
 	const postRef = useRef();
+	const { userId } = useContext(UserContext);
 
 	const focusError = isValid => {
 		switch (true) {
@@ -63,65 +64,61 @@ function JournalForm({ onSubmit }) {
 	};
 
 	return (
-		<UserContext.Consumer>
-			{context => (
-				<form className={styles['journal-form']} onSubmit={addJournalItem}>
-					{context.userId}
-					<div>
-						<Input
-							type='text'
-							ref={titleRef}
-							isValid={isValid.title}
-							onChange={onChange}
-							value={values.title}
-							name='title'
-							appearance='title'
-						/>
-					</div>
-					<div className={styles['form-row']}>
-						<label htmlFor='date' className={styles['form-label']}>
-							<img src='/calendar.svg' alt='Иконка календаря' />
-							<span>Дата</span>
-						</label>
-						<Input
-							type='date'
-							ref={dateRef}
-							isValid={isValid.date}
-							onChange={onChange}
-							name='date'
-							value={values.date}
-							id='date'
-						/>
-					</div>
-					<div className={styles['form-row']}>
-						<label htmlFor='tag' className={styles['form-label']}>
-							<img src='/folder.svg' alt='Иконка папки' />
-							<span>Метки</span>
-						</label>
-						<Input
-							type='text'
-							name='tag'
-							onChange={onChange}
-							value={values.tag}
-							id='tag'
-						/>
-					</div>
-					<textarea
-						name='post'
-						onChange={onChange}
-						value={values.post}
-						id=''
-						ref={postRef}
-						cols='30'
-						rows='10'
-						className={cn(styles['input'], {
-							[styles['invalid']]: !isValid.post,
-						})}
-					></textarea>
-					<Button text='Сохранить' />
-				</form>
-			)}
-		</UserContext.Consumer>
+		<form className={styles['journal-form']} onSubmit={addJournalItem}>
+			{userId}
+			<div>
+				<Input
+					type='text'
+					ref={titleRef}
+					isValid={isValid.title}
+					onChange={onChange}
+					value={values.title}
+					name='title'
+					appearance='title'
+				/>
+			</div>
+			<div className={styles['form-row']}>
+				<label htmlFor='date' className={styles['form-label']}>
+					<img src='/calendar.svg' alt='Иконка календаря' />
+					<span>Дата</span>
+				</label>
+				<Input
+					type='date'
+					ref={dateRef}
+					isValid={isValid.date}
+					onChange={onChange}
+					name='date'
+					value={values.date}
+					id='date'
+				/>
+			</div>
+			<div className={styles['form-row']}>
+				<label htmlFor='tag' className={styles['form-label']}>
+					<img src='/folder.svg' alt='Иконка папки' />
+					<span>Метки</span>
+				</label>
+				<Input
+					type='text'
+					name='tag'
+					onChange={onChange}
+					value={values.tag}
+					id='tag'
+				/>
+			</div>
+			<textarea
+				name='post'
+				onChange={onChange}
+				value={values.post}
+				id=''
+				ref={postRef}
+				cols='30'
+				rows='10'
+				className={cn(styles['input'], {
+					[styles['invalid']]: !isValid.post,
+				})}
+			></textarea>
+			<Button text='Сохранить' />
+		</form>
 	);
 }
 
