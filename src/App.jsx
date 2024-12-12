@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import './App.css';
 import Header from './components/Header/Header';
 import JournalAddButton from './components/JournalAddButton/JournalAddButton';
@@ -21,6 +22,7 @@ function mapItems(items) {
 
 function App() {
 	const [items, setItems] = useLocalStorage('data');
+	const [userId, setUserId] = useState(1);
 
 	const addItem = item => {
 		setItems([
@@ -36,7 +38,7 @@ function App() {
 
 	return (
 		<>
-			<UserContext.Provider value={{ userId: 1 }}>
+			<UserContext.Provider value={{ userId, setUserId }}>
 				<div className='app'>
 					<LeftPanel>
 						<Header />
