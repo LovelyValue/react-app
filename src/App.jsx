@@ -1,10 +1,9 @@
-import { useState } from 'react';
 import './App.css';
 import Header from './components/Header/Header';
 import JournalAddButton from './components/JournalAddButton/JournalAddButton';
 import JournalForm from './components/JournalForm/JournalForm';
 import JournalList from './components/JournalList/JournalList';
-import { UserContext } from './context/user.context';
+import { UserContextProvider } from './context/user.context';
 import { useLocalStorage } from './hooks/use-localstorage.hook';
 import Body from './layouts/Body/Body';
 import LeftPanel from './layouts/LeftPanel/LeftPanel';
@@ -22,7 +21,6 @@ function mapItems(items) {
 
 function App() {
 	const [items, setItems] = useLocalStorage('data');
-	const [userId, setUserId] = useState(1);
 
 	const addItem = item => {
 		setItems([
@@ -37,20 +35,18 @@ function App() {
 	};
 
 	return (
-		<>
-			<UserContext.Provider value={{ userId, setUserId }}>
-				<div className='app'>
-					<LeftPanel>
-						<Header />
-						<JournalAddButton />
-						<JournalList items={mapItems(items)} />
-					</LeftPanel>
-					<Body>
-						<JournalForm onSubmit={addItem} />
-					</Body>
-				</div>
-			</UserContext.Provider>
-		</>
+		<UserContextProvider>
+			<div className='app'>
+				<LeftPanel>
+					<Header />
+					<JournalAddButton />
+					<JournalList items={mapItems(items)} />
+				</LeftPanel>
+				<Body>
+					<JournalForm onSubmit={addItem} />
+				</Body>
+			</div>
+		</UserContextProvider>
 	);
 }
 
